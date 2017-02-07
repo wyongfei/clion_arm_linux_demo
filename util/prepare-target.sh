@@ -2,7 +2,10 @@
 ip=192.168.1.155
 ruser=root@$ip
 
-executable=/home/wyf/CLionProjects/cmake/bin/cmake
+dir=$(pwd)
+echo $dir
+
+executable=$dir/bin/cmake
 echo "  executable: $executable"
 echo "  ruser: $ruser"
 

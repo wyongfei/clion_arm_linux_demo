@@ -1,17 +1,29 @@
+#SET ENV IN /etc/profile
+#
+#export STAGING_DIR=/home/ramips/staging_dir/
+#export PATH=/home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin:$PATH
+#
+#export OPENWRT_LIB=/home/ramips/staging_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/usr/lib/
+#export OPENWRT_INC=/home/ramips/staging_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/usr/include/
+#
+#export RAMIPS_CC=/home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mipsel-openwrt-linux-gcc
+#export RAMIPS_CXX=/home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mipsel-openwrt-linux-g++
+
 cmake_minimum_required(VERSION 3.6)
 
-set(CMAKE_C_COMPILER "/home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mipsel-openwrt-linux-gcc")
-set(CMAKE_CXX_COMPILER "/home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mipsel-openwrt-linux-g++")
-
+set(CMAKE_C_COMPILER   $ENV{RAMIPS_CC})
+set(CMAKE_CXX_COMPILER $ENV{RAMIPS_CXX})
 
 project(cmake)
 
 MESSAGE(STATUS "Project: ${PROJECT_NAME}")
 MESSAGE(STATUS "Project Directory: ${PROJECT_SOURCE_DIR}")
+MESSAGE(STATUS "CC $ENV{RAMIPS_CC}")
+MESSAGE(STATUS "CXX $ENV{RAMIPS_CXX}")
 
 ################################################################################
 # cross compilation tools
-set(CROSS_GCC_FULL_PATH "/home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mipsel-openwrt-linux-gcc")
+set(CROSS_GCC_FULL_PATH $ENV{RAMIPS_CC})
 get_filename_component(CROSS_COMPIL_TOOLS ${CROSS_GCC_FULL_PATH} PATH)
 if (NOT EXISTS ${CROSS_COMPIL_TOOLS})
     message (FATAL_ERROR "Can't find cross compilation tool chain")
@@ -35,11 +47,12 @@ SET(CMAKE_RANLIB		${CPREF}-ranlib CACHE STRING "mipsel-openwrt-ranlib" FORCE)
 ################################################################################
 
 include_directories(BEFORE SYSTEM
-        /home/ramips/staging_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/usr/include
-        /home/ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2/include
+        "$ENV{OPENWRT_INC}"
         )
 
-
+link_directories(
+        "$ENV{OPENWRT_LIB}"
+)
 
 set(CMAKE_C_STANDARD 99)
 
@@ -48,5 +61,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 set(SOURCE_FILES main.c)
+
 add_executable(cmake ${SOURCE_FILES})
 

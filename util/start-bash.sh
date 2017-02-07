@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-gnome-terminal -x bash '/home/wyf/Desktop/prepare-target.sh'
+
+dir=$(pwd)
+
+echo $dir
+
+gnome-terminal -x  $dir/util/prepare-target.sh
 
 echo "sleep 10"
 sleep 10

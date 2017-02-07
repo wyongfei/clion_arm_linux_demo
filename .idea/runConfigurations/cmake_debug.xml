@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="cmake_debug" type="CLion_Remote" factoryName="GDB Remote Debug" singleton="false" remoteCommand="tcp:192.168.1.155:2345" symbolFile="$PROJECT_DIR$/bin/cmake" sysroot="$PROJECT_DIR$/../../../ramips/staging_dir/toolchain-mipsel_24kec+dsp_gcc-4.8-linaro_uClibc-0.9.33.2">
+    <method>
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_prepare_target" />
+    </method>
+  </configuration>
+</component>

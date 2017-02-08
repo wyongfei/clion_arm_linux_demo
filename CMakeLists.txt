@@ -65,4 +65,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(SOURCE_FILES main.c)
 
 add_executable(cmake ${SOURCE_FILES})
+TARGET_LINK_LIBRARIES(cmake pthread)
+
 
